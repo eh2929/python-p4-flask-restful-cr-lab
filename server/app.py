@@ -21,17 +21,22 @@ class Plants(Resource):
 
     # index
     def get(self):
-        plants = Plant.query.all()
-        result = []
-        for plant in plants:
-            plant_data = {
-                "id": plant.id,
-                "name": plant.name,
-                "image": plant.image,
-                "price": plant.price,
-            }
-            result.append(plant_data)
-            return jsonify(result)
+        response_dict_list = [p.to_dict() for p in Plant.query.all()]
+        response = make_response(jsonify(response_dict_list), 200)
+        return response
+
+    # def get(self):
+    #     plants = Plant.query.all()
+    #     result = []
+    #     for plant in plants:
+    #         plant_data = {
+    #             "id": plant.id,
+    #             "name": plant.name,
+    #             "image": plant.image,
+    #             "price": plant.price,
+    #         }
+    #         result.append(plant_data)
+    #         return jsonify(result)
 
     # post method
     def post(self):
